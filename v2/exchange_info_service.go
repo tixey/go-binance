@@ -73,7 +73,7 @@ type ExchangeInfo struct {
 	Symbols         []Symbol      `json:"symbols"`
 }
 
-// RateLimit struct
+// RateLimit struct + count
 type RateLimit struct {
 	RateLimitType string `json:"rateLimitType"`
 	Interval      string `json:"interval"`
