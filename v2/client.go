@@ -394,7 +394,7 @@ func (c *Client) parseRequest(r *request, opts ...RequestOption) (err error) {
 	return nil
 }
 
-func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) (data []byte, err error) {
+func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) (data []byte, header *http.Header, err error) {
 	err = c.parseRequest(r, opts...)
 	if err != nil {
 		return []byte{}, err
@@ -438,7 +438,7 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 		}
 		return nil, apiErr
 	}
-	return data, nil
+	return data, &res.Header, nil
 }
 
 // SetApiEndpoint set api Endpoint
