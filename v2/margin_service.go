@@ -46,7 +46,7 @@ func (s *MarginTransferService) Do(ctx context.Context, opts ...RequestOption) (
 	}
 	r.setFormParams(m)
 	res = new(TransactionResponse)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func (s *MarginLoanService) Do(ctx context.Context, opts ...RequestOption) (res 
 	}
 
 	res = new(TransactionResponse)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func (s *MarginRepayService) Do(ctx context.Context, opts ...RequestOption) (res
 	}
 
 	res = new(TransactionResponse)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ func (s *ListMarginLoansService) Do(ctx context.Context, opts ...RequestOption) 
 	if s.size != nil {
 		r.setParam("size", *s.size)
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -356,7 +356,7 @@ func (s *ListMarginRepaysService) Do(ctx context.Context, opts ...RequestOption)
 	if s.size != nil {
 		r.setParam("size", *s.size)
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -410,7 +410,7 @@ func (s *GetIsolatedMarginAccountService) Do(ctx context.Context, opts ...Reques
 		r.setParam("symbols", strings.Join(s.symbols, ","))
 	}
 
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -474,7 +474,7 @@ func (s *GetMarginAccountService) Do(ctx context.Context, opts ...RequestOption)
 		endpoint: "/sapi/v1/margin/account",
 		secType:  secTypeSigned,
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -528,7 +528,7 @@ func (s *GetMarginAssetService) Do(ctx context.Context, opts ...RequestOption) (
 		secType:  secTypeAPIKey,
 	}
 	r.setParam("asset", s.asset)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -570,7 +570,7 @@ func (s *GetMarginPairService) Do(ctx context.Context, opts ...RequestOption) (r
 		secType:  secTypeAPIKey,
 	}
 	r.setParam("symbol", s.symbol)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -605,7 +605,7 @@ func (s *GetMarginAllPairsService) Do(ctx context.Context, opts ...RequestOption
 		endpoint: "/sapi/v1/margin/allPairs",
 		secType:  secTypeAPIKey,
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []*MarginAllPair{}, err
 	}
@@ -648,7 +648,7 @@ func (s *GetMarginPriceIndexService) Do(ctx context.Context, opts ...RequestOpti
 		secType:  secTypeAPIKey,
 	}
 	r.setParam("symbol", s.symbol)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -737,7 +737,7 @@ func (s *ListMarginTradesService) Do(ctx context.Context, opts ...RequestOption)
 	if s.isIsolated {
 		r.setParam("isIsolated", "TRUE")
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []*TradeV3{}, err
 	}
@@ -779,7 +779,7 @@ func (s *GetMaxBorrowableService) Do(ctx context.Context, opts ...RequestOption)
 	if s.isolatedSymbol != "" {
 		r.setParam("isolatedSymbol", s.isolatedSymbol)
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +816,7 @@ func (s *GetMaxTransferableService) Do(ctx context.Context, opts ...RequestOptio
 		secType:  secTypeSigned,
 	}
 	r.setParam("asset", s.asset)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -855,7 +855,7 @@ func (s *StartIsolatedMarginUserStreamService) Do(ctx context.Context, opts ...R
 
 	r.setFormParam("symbol", s.symbol)
 
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return "", err
 	}
@@ -896,7 +896,7 @@ func (s *KeepaliveIsolatedMarginUserStreamService) Do(ctx context.Context, opts 
 	r.setFormParam("listenKey", s.listenKey)
 	r.setFormParam("symbol", s.symbol)
 
-	_, err = s.c.callAPI(ctx, r, opts...)
+	_, _, err = s.c.callAPI(ctx, r, opts...)
 	return err
 }
 
@@ -931,7 +931,7 @@ func (s *CloseIsolatedMarginUserStreamService) Do(ctx context.Context, opts ...R
 	r.setFormParam("listenKey", s.listenKey)
 	r.setFormParam("symbol", s.symbol)
 
-	_, err = s.c.callAPI(ctx, r, opts...)
+	_, _, err = s.c.callAPI(ctx, r, opts...)
 	return err
 }
 
@@ -948,7 +948,7 @@ func (s *StartMarginUserStreamService) Do(ctx context.Context, opts ...RequestOp
 		secType:  secTypeAPIKey,
 	}
 
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return "", err
 	}
@@ -980,7 +980,7 @@ func (s *KeepaliveMarginUserStreamService) Do(ctx context.Context, opts ...Reque
 		secType:  secTypeAPIKey,
 	}
 	r.setFormParam("listenKey", s.listenKey)
-	_, err = s.c.callAPI(ctx, r, opts...)
+	_, _, err = s.c.callAPI(ctx, r, opts...)
 	return err
 }
 
@@ -1006,7 +1006,7 @@ func (s *CloseMarginUserStreamService) Do(ctx context.Context, opts ...RequestOp
 
 	r.setFormParam("listenKey", s.listenKey)
 
-	_, err = s.c.callAPI(ctx, r, opts...)
+	_, _, err = s.c.callAPI(ctx, r, opts...)
 	return err
 }
 
@@ -1022,7 +1022,7 @@ func (s *GetAllMarginAssetsService) Do(ctx context.Context, opts ...RequestOptio
 		endpoint: "/sapi/v1/margin/allAssets",
 		secType:  secTypeAPIKey,
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []*MarginAsset{}, err
 	}
@@ -1046,7 +1046,7 @@ func (s *GetIsolatedMarginAllPairsService) Do(ctx context.Context, opts ...Reque
 		endpoint: "/sapi/v1/margin/isolated/allPairs",
 		secType:  secTypeAPIKey,
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []*IsolatedMarginAllPair{}, err
 	}
@@ -1118,7 +1118,7 @@ func (s *IsolatedMarginTransferService) Do(ctx context.Context, opts ...RequestO
 	r.setFormParam("transFrom", s.transFrom)
 	r.setFormParam("transTo", s.transTo)
 	r.setFormParam("amount", s.amount)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}

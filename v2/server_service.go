@@ -16,7 +16,7 @@ func (s *PingService) Do(ctx context.Context, opts ...RequestOption) (err error)
 		method:   http.MethodGet,
 		endpoint: "/api/v3/ping",
 	}
-	_, err = s.c.callAPI(ctx, r, opts...)
+	_, _, err = s.c.callAPI(ctx, r, opts...)
 	return err
 }
 

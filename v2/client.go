@@ -397,11 +397,11 @@ func (c *Client) parseRequest(r *request, opts ...RequestOption) (err error) {
 func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) (data []byte, header *http.Header, err error) {
 	err = c.parseRequest(r, opts...)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	req, err := http.NewRequest(r.method, r.fullURL, r.body)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	req = req.WithContext(ctx)
 	req.Header = r.header
@@ -412,11 +412,11 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 	}
 	res, err := f(req)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	data, err = ioutil.ReadAll(res.Body)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	defer func() {
 		cerr := res.Body.Close()
@@ -436,7 +436,7 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 		if e != nil {
 			c.debug("failed to unmarshal json: %s", e)
 		}
-		return nil, apiErr
+		return nil, nil, apiErr
 	}
 	return data, &res.Header, nil
 }

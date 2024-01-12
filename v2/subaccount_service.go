@@ -42,7 +42,7 @@ func (s *TransferToSubAccountService) transferToSubaccount(ctx context.Context, 
 		"amount":  s.amount,
 	}
 	r.setParams(m)
-	data, err = s.c.callAPI(ctx, r, opts...)
+	data, _, err = s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -105,7 +105,7 @@ func (s *SubaccountDepositAddressService) subaccountDepositAddress(ctx context.C
 		"network": s.network,
 	}
 	r.setParams(m)
-	data, err = s.c.callAPI(ctx, r, opts...)
+	data, _, err = s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -154,7 +154,7 @@ func (s *SubaccountAssetsService) subaccountAssets(ctx context.Context, endpoint
 		"email": s.email,
 	}
 	r.setParams(m)
-	data, err = s.c.callAPI(ctx, r, opts...)
+	data, _, err = s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -227,7 +227,7 @@ func (s *SubaccountSpotSummaryService) subaccountSpotSummary(ctx context.Context
 	if s.email != nil {
 		r.setParam("email", *s.email)
 	}
-	data, err = s.c.callAPI(ctx, r, opts...)
+	data, _, err = s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -313,7 +313,7 @@ func (s *SubAccountListService) Do(ctx context.Context, opts ...RequestOption) (
 	} else {
 		r.setParam("limit", s.limit)
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ func (s *ManagedSubAccountDepositService) Do(ctx context.Context, opts ...Reques
 	r.setParam("asset", s.asset)
 	r.setParam("amount", s.amount)
 
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +441,7 @@ func (s *ManagedSubAccountWithdrawalService) Do(ctx context.Context, opts ...Req
 		r.setParam("transferDate", s.transferDate)
 	}
 
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -485,7 +485,7 @@ func (s *ManagedSubAccountAssetsService) Do(ctx context.Context, opts ...Request
 
 	r.setParam("email", s.email)
 
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -519,7 +519,7 @@ func (s *SubAccountFuturesAccountService) Do(ctx context.Context, opts ...Reques
 	if s.email != nil {
 		r.setParam("email", *s.email)
 	}
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, _, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
